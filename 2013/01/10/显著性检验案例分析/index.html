@@ -1,0 +1,645 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <html xmlns:wb="http://open.weibo.com/wb">
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2320985299" type="text/javascript" charset="utf-8"></script>
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="baidu-site-verification" content="p53TEKWC7M" />
+<meta property="wb:webmaster" content="a937b6625d26dfc6" />
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数据分析,显著性检验,案例," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="数据化分析" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="文/数据化分析
+显著性检验利用样本信息来判断假设是否合理，对测试数据进行比较分析时，不能仅凭两个结果（平均数或率）的不同就作出结论，而是要进行统计学分析，鉴别出两者差异的真实原因。
+常把一个要检验的假设称为原假设，在原假设为真时，决定放弃原假设，称为第一类错误，为了便于理解，举一个例子来说明：假设有一个数据分析师确实能够在一年内为企业带来超过一亿元的收益，但是当我们拒绝这样的假设时，就犯了第一类错">
+<meta property="og:type" content="article">
+<meta property="og:title" content="显著性检验案例分析">
+<meta property="og:url" content="http://sjhfx.cc/2013/01/10/显著性检验案例分析/index.html">
+<meta property="og:site_name" content="数据化分析">
+<meta property="og:description" content="文/数据化分析
+显著性检验利用样本信息来判断假设是否合理，对测试数据进行比较分析时，不能仅凭两个结果（平均数或率）的不同就作出结论，而是要进行统计学分析，鉴别出两者差异的真实原因。
+常把一个要检验的假设称为原假设，在原假设为真时，决定放弃原假设，称为第一类错误，为了便于理解，举一个例子来说明：假设有一个数据分析师确实能够在一年内为企业带来超过一亿元的收益，但是当我们拒绝这样的假设时，就犯了第一类错">
+<meta property="og:image" content="http://sjhfx.cc/images/xzxjyalfx1.jpg">
+<meta property="og:image" content="http://sjhfx.cc/images/xzxjyalfx2.jpg">
+<meta property="og:image" content="http://sjhfx.cc/images/xzxjyalfx3.jpg">
+<meta property="og:updated_time" content="2016-08-26T07:28:17.558Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="显著性检验案例分析">
+<meta name="twitter:description" content="文/数据化分析
+显著性检验利用样本信息来判断假设是否合理，对测试数据进行比较分析时，不能仅凭两个结果（平均数或率）的不同就作出结论，而是要进行统计学分析，鉴别出两者差异的真实原因。
+常把一个要检验的假设称为原假设，在原假设为真时，决定放弃原假设，称为第一类错误，为了便于理解，举一个例子来说明：假设有一个数据分析师确实能够在一年内为企业带来超过一亿元的收益，但是当我们拒绝这样的假设时，就犯了第一类错">
+<meta name="twitter:image" content="http://sjhfx.cc/images/xzxjyalfx1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://sjhfx.cc/2013/01/10/显著性检验案例分析/"/>
+
+  <title> 显著性检验案例分析 | 数据化分析 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?dfdad96d491ca6892a472f33547c16e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">数据化分析</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                显著性检验案例分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-10T00:00:00+08:00" content="2013-01-10">
+              2013-01-10
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/10/显著性检验案例分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/显著性检验案例分析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文/<a href="https//sjhfx.cc/">数据化分析</a></p>
+<p>显著性检验利用样本信息来判断假设是否合理，对测试数据进行比较分析时，不能仅凭两个结果（平均数或率）的不同就作出结论，而是要进行统计学分析，鉴别出两者差异的真实原因。</p>
+<p>常把一个要检验的假设称为原假设，在原假设为真时，决定放弃原假设，称为第一类错误，为了便于理解，举一个例子来说明：假设有一个数据分析师确实能够在一年内为企业带来超过一亿元的收益，但是当我们拒绝这样的假设时，就犯了第一类错误，因为我们的假设是正确的，却没有接受。第一类错误出现的概率通常称为【显著性水平】，其最常用的值为0.01、0.05、0.10等。一般情况下，根据研究的问题，如果放弃真错误损失大，为减少这类错误，显著性水平取值小些，即所谓的“宁可信其有，不可信其无”！</p>
+<p>案例：假设随机抽取6名男性和8名女性数据分析师的笔试成绩如下表所示，问男性与女性的成绩是否存在显著差异？（案例纯属瞎编，请勿对号入座！）</p>
+<p><img src="http://sjhfx.cc/images/xzxjyalfx1.jpg" alt=""></p>
+<p>下面我们利用R软件来分析这个案例，原假设：男女成绩不存在显著差异。R软件命令程序及结果分析如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">x=c(<span class="number">92</span>,<span class="number">78</span>,<span class="number">94</span>,<span class="number">88</span>,<span class="number">76</span>,<span class="number">87</span>) <span class="comment">#男性数据分析师的笔试成绩</span></div><div class="line">y=c(<span class="number">69</span>,<span class="number">52</span>,<span class="number">86</span>,<span class="number">80</span>,<span class="number">47</span>,<span class="number">63</span>,<span class="number">76</span>,<span class="number">82</span>) <span class="comment">#女性数据分析师的笔试成绩</span></div><div class="line">stem(x) <span class="comment">#男性数据分析师的笔试成绩茎叶图</span></div><div class="line">stem(y) <span class="comment">#女性数据分析师的笔试成绩茎叶图</span></div><div class="line">EDA=<span class="keyword">function</span>(z) &#123;</div><div class="line">  par(mfrow=c(<span class="number">2</span>,<span class="number">2</span>))<span class="comment">#设置作图窗口为2行2列</span></div><div class="line">  hist(z);<span class="comment">#直方图</span></div><div class="line">  dotchart(z);<span class="comment">#点图</span></div><div class="line">  boxplot(z,horizontal=<span class="literal">F</span>);<span class="comment">#箱线图</span></div><div class="line">  qqnorm(z);qqline(z)<span class="comment">#正态概率图（Q-Q图）</span></div><div class="line">  par(mfrow=c(<span class="number">1</span>,<span class="number">1</span>))  <span class="comment">#恢复成单图</span></div><div class="line">&#125;</div><div class="line">EDA(x)</div><div class="line">EDA(y)</div></pre></td></tr></table></figure>
+<p><img src="http://sjhfx.cc/images/xzxjyalfx2.jpg" alt=""></p>
+<p><img src="http://sjhfx.cc/images/xzxjyalfx3.jpg" alt=""></p>
+<p>从茎叶图可以得出男性和女性的笔试成绩都不完全是正态分布的。而且，对比可以看到男性的成绩以85-95为主；女性的成绩比较分散，以60-90分为主。所以可初步估计男性的成绩比女性好，但并不能判断男性的成绩显著高于女性。</p>
+<p>从散点图和箱线图可以判断出，女性的成绩明显比男性分散，且女性的成绩平均值明显低于男性。从Q-Q图可以看到，男女的成绩数据都有比较严重的偏离正态性，所以应该首先考虑运用非参数的统计分析方法。<br><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">r=rank(y,ties.method=<span class="string">"random"</span>)<span class="comment"># y 求秩</span></div><div class="line">p=rank(x,ties.method=<span class="string">"random"</span>)<span class="comment"># x 求秩</span></div><div class="line">ks.test(p,<span class="string">"pnorm"</span>)<span class="comment">#检验样本数据是否符合正态分布</span></div><div class="line">ks.test(r,<span class="string">"pnorm"</span>)</div></pre></td></tr></table></figure></p>
+<p>上面两个检验的p-value都明显小于0.05，所以拒绝认为样本数据服从正态分布的特性，即样本的正态性较差，从而用基于符号秩和的检验是正确的。<br><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wilcox.test(x,y)<span class="comment">#对两样本作符号秩和检验</span></div></pre></td></tr></table></figure></p>
+<p>Wilcoxon rank sum test with continuity correction<br>data:  x and y<br>W = 41.5, p-value = 0.02801<br>alternative hypothesis: true location shift is not equal to 0</p>
+<p>从以上R软件运行的结果可以看到，p-value = 0.02801，在显著性水平为0.05的条件下，p-value &lt; 0.05，所以拒绝原假设，即认为男女成绩存在显著差异。</p>
+<p>分析结论：男性平均成绩为85.8分，女性平均成绩为69.4分，且女性成绩比较分散，经过对两个班的Wilcoxon符号秩检验可以得出，在显著性水平为0.05的条件下，拒绝认为男女成绩不存在显著差异，也就是说可以认为男女成绩有显著的不同，所以综上可以认为男性数据分析师的笔试成绩显著高于女性。（这是瞎编的结果，作者并没有性别歧视的意思！）</p>
+<p>参考资料：</p>
+<p><a href="http://yisiondong.blog.163.com/blog/static/119647198201061882313471" target="_blank" rel="external">关于两个班成绩差异显著性的研究</a></p>
+<p><a href="http://wiki.mbalib.com/wiki/%E7%A7%A9%E5%92%8C%E6%A3%80%E9%AA%8C" target="_blank" rel="external">秩和检验</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+		
+    <footer class="post-footer">
+	
+	<! -- 开始：文章结尾统一签名 -->
+	欢迎评论和转载，转载请注明来源于数据化分析。<br />
+	欢迎关注数据化分析的微博和微信：
+	<wb:follow-button uid="2616006187" type="gray_1" width="67" height="24" ></wb:follow-button>
+	<img src="http://sjhfx.cc/images/isjhfx.jpg" alt="数据化分析微信公众号" />
+	<br />
+	<! -- 结束：文章结尾统一签名 -->
+	
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据分析/" rel="tag">#数据分析</a>
+          
+            <a href="/tags/显著性检验/" rel="tag">#显著性检验</a>
+          
+            <a href="/tags/案例/" rel="tag">#案例</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/07/12/解读数据挖掘之关联规则/" rel="next" title="解读数据挖掘之关联规则">
+                <i class="fa fa-chevron-left"></i> 解读数据挖掘之关联规则
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/22/R微博数据分析/" rel="prev" title="R微博数据分析">
+                R微博数据分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2013/01/10/显著性检验案例分析/"
+           data-title="显著性检验案例分析" data-url="http://sjhfx.cc/2013/01/10/显著性检验案例分析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/sjhfx.jpg"
+               alt="sjhfx" />
+          <p class="site-author-name" itemprop="name">sjhfx</p>
+          <p class="site-description motion-element" itemprop="description">数据化分析</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" style="text-align:center" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="author" itemprop="copyrightHolder">sjhfx</span>
+</div>
+
+<div style="text-align:center" >
+  All Rights Reserved
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sjhfx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

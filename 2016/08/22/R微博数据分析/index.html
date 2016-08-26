@@ -1,0 +1,640 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <html xmlns:wb="http://open.weibo.com/wb">
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2320985299" type="text/javascript" charset="utf-8"></script>
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="baidu-site-verification" content="p53TEKWC7M" />
+<meta property="wb:webmaster" content="a937b6625d26dfc6" />
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="R,微博,数据分析," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="数据化分析" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="文/数据化分析
+针对微博上的热点事件，你是否想自己动手做个数据分析？为了简化分析过程，数据化分析制作了一个免费开源的R包https://github.com/sjhfx/rwda，名字叫rwda，即R Weibo Data Analysis的首字母缩写。本文通过一个案例，介绍微博数据分析的结果和实现方法。
+案例分析以王宝强2016年8月14日发的离婚声明微博为例，选取最近的评论内容，用R进行数据分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R微博数据分析">
+<meta property="og:url" content="http://sjhfx.cc/2016/08/22/R微博数据分析/index.html">
+<meta property="og:site_name" content="数据化分析">
+<meta property="og:description" content="文/数据化分析
+针对微博上的热点事件，你是否想自己动手做个数据分析？为了简化分析过程，数据化分析制作了一个免费开源的R包https://github.com/sjhfx/rwda，名字叫rwda，即R Weibo Data Analysis的首字母缩写。本文通过一个案例，介绍微博数据分析的结果和实现方法。
+案例分析以王宝强2016年8月14日发的离婚声明微博为例，选取最近的评论内容，用R进行数据分">
+<meta property="og:image" content="http://sjhfx.cc/images/rwbsjfx1.jpg">
+<meta property="og:image" content="http://sjhfx.cc/images/rwbsjfx2.jpg">
+<meta property="og:image" content="http://sjhfx.cc/images/rwbsjfx3.jpg">
+<meta property="og:updated_time" content="2016-08-26T07:27:50.234Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="R微博数据分析">
+<meta name="twitter:description" content="文/数据化分析
+针对微博上的热点事件，你是否想自己动手做个数据分析？为了简化分析过程，数据化分析制作了一个免费开源的R包https://github.com/sjhfx/rwda，名字叫rwda，即R Weibo Data Analysis的首字母缩写。本文通过一个案例，介绍微博数据分析的结果和实现方法。
+案例分析以王宝强2016年8月14日发的离婚声明微博为例，选取最近的评论内容，用R进行数据分">
+<meta name="twitter:image" content="http://sjhfx.cc/images/rwbsjfx1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://sjhfx.cc/2016/08/22/R微博数据分析/"/>
+
+  <title> R微博数据分析 | 数据化分析 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?dfdad96d491ca6892a472f33547c16e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">数据化分析</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                R微博数据分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T00:00:00+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/R微博数据分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/R微博数据分析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文/<a href="https//sjhfx.cc/">数据化分析</a></p>
+<p>针对微博上的热点事件，你是否想自己动手做个数据分析？为了简化分析过程，数据化分析制作了一个免费开源的R包<a href="https://github.com/sjhfx/rwda" target="_blank" rel="external">https://github.com/sjhfx/rwda</a>，名字叫rwda，即R Weibo Data Analysis的首字母缩写。本文通过一个案例，介绍微博数据分析的结果和实现方法。</p>
+<h3 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h3><p>以王宝强2016年8月14日发的离婚声明微博为例，选取最近的评论内容，用R进行数据分析的结果如下：</p>
+<p><img src="http://sjhfx.cc/images/rwbsjfx1.jpg" alt=""></p>
+<p>可以看出这些评论者大多数是支持王宝强的。从下面的小提琴图来看，该微博评论的男性用户数量略多一些，男性占比为51.7%，但男性用户的微博等级要低一点（图中的白点是中位数，男性用户的微博等级中位数约为5级，而女性用户的微博等级中位数接近10级），而认证用户的微博等级明显较高（认证用户的微博等级中位数超过20级），不过微博认证的用户较少，在我们抓取的样本中只占2.6%，关于小提琴图的详细解读，请参考数据化分析以前发的一篇文章：数据分析实战之【小提琴图】。</p>
+<p><img src="http://sjhfx.cc/images/rwbsjfx2.jpg" alt=""></p>
+<p><img src="http://sjhfx.cc/images/rwbsjfx3.jpg" alt=""></p>
+<h3 id="R语言实现代码"><a href="#R语言实现代码" class="headerlink" title="R语言实现代码"></a>R语言实现代码</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">devtools::install_github(<span class="string">"sjhfx/rwda"</span>)</div><div class="line"><span class="keyword">library</span>(rwda)</div><div class="line">access_token = <span class="string">"2.00xxxxxxxxx"</span></div><div class="line">weiboid = <span class="string">"4008168466150722"</span></div><div class="line">df_comments = get_comments(access_token, weiboid, maxpage = <span class="number">20</span>)</div><div class="line">weibo_cloud(df_comments, stopwords = c(<span class="string">"心心"</span>, <span class="string">"回复"</span>))</div><div class="line">gender_vioplot(df_comments, title_text = <span class="string">"微博用户性别与等级分布"</span></div><div class="line">verify_vioplot(df_comments, title_text = <span class="string">"微博用户认证与等级分布"</span>)</div></pre></td></tr></table></figure>
+<p>其中access_token可以通过 <a href="http://open.weibo.com/tools/console" target="_blank" rel="external">http://open.weibo.com/tools/console</a> 获取。</p>
+<p>weiboid可以替换为你感兴趣的任意微博id，获取weiboid的方法：</p>
+<ol>
+<li>点击某条微博左上角用户名下面的时间，进入微博详情页面；</li>
+<li>鼠标右键查看源代码；</li>
+<li>搜索“mid=”，它的后面有一串数字就是我们所需要的weiboid。</li>
+</ol>
+<p>stopwords的作用是排除一些没有什么意义的词。</p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>rwda包使用的R软件版本是3.3.1，安装rwda的同时会安装RCurl, plyr, rjson, jiebaR, wordcloud2, vioplot等R包。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+		
+    <footer class="post-footer">
+	
+	<! -- 开始：文章结尾统一签名 -->
+	欢迎评论和转载，转载请注明来源于数据化分析。<br />
+	欢迎关注数据化分析的微博和微信：
+	<wb:follow-button uid="2616006187" type="gray_1" width="67" height="24" ></wb:follow-button>
+	<img src="http://sjhfx.cc/images/isjhfx.jpg" alt="数据化分析微信公众号" />
+	<br />
+	<! -- 结束：文章结尾统一签名 -->
+	
+      
+        <div class="post-tags">
+          
+            <a href="/tags/R/" rel="tag">#R</a>
+          
+            <a href="/tags/微博/" rel="tag">#微博</a>
+          
+            <a href="/tags/数据分析/" rel="tag">#数据分析</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/01/10/显著性检验案例分析/" rel="next" title="显著性检验案例分析">
+                <i class="fa fa-chevron-left"></i> 显著性检验案例分析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/22/R微博数据分析/"
+           data-title="R微博数据分析" data-url="http://sjhfx.cc/2016/08/22/R微博数据分析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/sjhfx.jpg"
+               alt="sjhfx" />
+          <p class="site-author-name" itemprop="name">sjhfx</p>
+          <p class="site-description motion-element" itemprop="description">数据化分析</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#案例分析"><span class="nav-number">1.</span> <span class="nav-text">案例分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#R语言实现代码"><span class="nav-number">2.</span> <span class="nav-text">R语言实现代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">3.</span> <span class="nav-text">说明</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" style="text-align:center" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="author" itemprop="copyrightHolder">sjhfx</span>
+</div>
+
+<div style="text-align:center" >
+  All Rights Reserved
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sjhfx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

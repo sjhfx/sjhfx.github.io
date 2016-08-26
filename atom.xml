@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>数据化分析</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://sjhfx.cc/"/>
+  <updated>2016-08-26T07:27:50.234Z</updated>
+  <id>http://sjhfx.cc/</id>
+  
+  <author>
+    <name>sjhfx</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>R微博数据分析</title>
+    <link href="http://sjhfx.cc/2016/08/22/R%E5%BE%AE%E5%8D%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    <id>http://sjhfx.cc/2016/08/22/R微博数据分析/</id>
+    <published>2016-08-21T16:00:00.000Z</published>
+    <updated>2016-08-26T07:27:50.234Z</updated>
+    
+    <content type="html"><![CDATA[<p>文/<a href="https//sjhfx.cc/">数据化分析</a></p>
+<p>针对微博上的热点事件，你是否想自己动手做个数据分析？为了简化分析过程，数据化分析制作了一个免费开源的R包<a href="https://github.com/sjhfx/rwda" target="_blank" rel="external">https://github.com/sjhfx/rwda</a>，名字叫rwda，即R Weibo Data Analysis的首字母缩写。本文通过一个案例，介绍微博数据分析的结果和实现方法。</p>
+<h3 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h3><p>以王宝强2016年8月14日发的离婚声明微博为例，选取最近的评论内容，用R进行数据分析的结果如下：</p>
+<p><img src="http://sjhfx.cc/images/rwbsjfx1.jpg" alt=""></p>
+<p>可以看出这些评论者大多数是支持王宝强的。从下面的小提琴图来看，该微博评论的男性用户数量略多一些，男性占比为51.7%，但男性用户的微博等级要低一点（图中的白点是中位数，男性用户的微博等级中位数约为5级，而女性用户的微博等级中位数接近10级），而认证用户的微博等级明显较高（认证用户的微博等级中位数超过20级），不过微博认证的用户较少，在我们抓取的样本中只占2.6%，关于小提琴图的详细解读，请参考数据化分析以前发的一篇文章：数据分析实战之【小提琴图】。</p>
+<p><img src="http://sjhfx.cc/images/rwbsjfx2.jpg" alt=""></p>
+<p><img src="http://sjhfx.cc/images/rwbsjfx3.jpg" alt=""></p>
+<h3 id="R语言实现代码"><a href="#R语言实现代码" class="headerlink" title="R语言实现代码"></a>R语言实现代码</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">devtools::install_github(<span class="string">"sjhfx/rwda"</span>)</div><div class="line"><span class="keyword">library</span>(rwda)</div><div class="line">access_token = <span class="string">"2.00xxxxxxxxx"</span></div><div class="line">weiboid = <span class="string">"4008168466150722"</span></div><div class="line">df_comments = get_comments(access_token, weiboid, maxpage = <span class="number">20</span>)</div><div class="line">weibo_cloud(df_comments, stopwords = c(<span class="string">"心心"</span>, <span class="string">"回复"</span>))</div><div class="line">gender_vioplot(df_comments, title_text = <span class="string">"微博用户性别与等级分布"</span></div><div class="line">verify_vioplot(df_comments, title_text = <span class="string">"微博用户认证与等级分布"</span>)</div></pre></td></tr></table></figure>
+<p>其中access_token可以通过 <a href="http://open.weibo.com/tools/console" target="_blank" rel="external">http://open.weibo.com/tools/console</a> 获取。</p>
+<p>weiboid可以替换为你感兴趣的任意微博id，获取weiboid的方法：</p>
+<ol>
+<li>点击某条微博左上角用户名下面的时间，进入微博详情页面；</li>
+<li>鼠标右键查看源代码；</li>
+<li>搜索“mid=”，它的后面有一串数字就是我们所需要的weiboid。</li>
+</ol>
+<p>stopwords的作用是排除一些没有什么意义的词。</p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>rwda包使用的R软件版本是3.3.1，安装rwda的同时会安装RCurl, plyr, rjson, jiebaR, wordcloud2, vioplot等R包。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;文/&lt;a href=&quot;https//sjhfx.cc/&quot;&gt;数据化分析&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;针对微博上的热点事件，你是否想自己动手做个数据分析？为了简化分析过程，数据化分析制作了一个免费开源的R包&lt;a href=&quot;https://github.com/sjhfx/rwda&quot;
+    
+    </summary>
+    
+    
+      <category term="R" scheme="http://sjhfx.cc/tags/R/"/>
+    
+      <category term="微博" scheme="http://sjhfx.cc/tags/%E5%BE%AE%E5%8D%9A/"/>
+    
+      <category term="数据分析" scheme="http://sjhfx.cc/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>显著性检验案例分析</title>
+    <link href="http://sjhfx.cc/2013/01/10/%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E9%AA%8C%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/"/>
+    <id>http://sjhfx.cc/2013/01/10/显著性检验案例分析/</id>
+    <published>2013-01-09T16:00:00.000Z</published>
+    <updated>2016-08-26T07:28:17.558Z</updated>
+    
+    <content type="html"><![CDATA[<p>文/<a href="https//sjhfx.cc/">数据化分析</a></p>
+<p>显著性检验利用样本信息来判断假设是否合理，对测试数据进行比较分析时，不能仅凭两个结果（平均数或率）的不同就作出结论，而是要进行统计学分析，鉴别出两者差异的真实原因。</p>
+<p>常把一个要检验的假设称为原假设，在原假设为真时，决定放弃原假设，称为第一类错误，为了便于理解，举一个例子来说明：假设有一个数据分析师确实能够在一年内为企业带来超过一亿元的收益，但是当我们拒绝这样的假设时，就犯了第一类错误，因为我们的假设是正确的，却没有接受。第一类错误出现的概率通常称为【显著性水平】，其最常用的值为0.01、0.05、0.10等。一般情况下，根据研究的问题，如果放弃真错误损失大，为减少这类错误，显著性水平取值小些，即所谓的“宁可信其有，不可信其无”！</p>
+<p>案例：假设随机抽取6名男性和8名女性数据分析师的笔试成绩如下表所示，问男性与女性的成绩是否存在显著差异？（案例纯属瞎编，请勿对号入座！）</p>
+<p><img src="http://sjhfx.cc/images/xzxjyalfx1.jpg" alt=""></p>
+<p>下面我们利用R软件来分析这个案例，原假设：男女成绩不存在显著差异。R软件命令程序及结果分析如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">x=c(<span class="number">92</span>,<span class="number">78</span>,<span class="number">94</span>,<span class="number">88</span>,<span class="number">76</span>,<span class="number">87</span>) <span class="comment">#男性数据分析师的笔试成绩</span></div><div class="line">y=c(<span class="number">69</span>,<span class="number">52</span>,<span class="number">86</span>,<span class="number">80</span>,<span class="number">47</span>,<span class="number">63</span>,<span class="number">76</span>,<span class="number">82</span>) <span class="comment">#女性数据分析师的笔试成绩</span></div><div class="line">stem(x) <span class="comment">#男性数据分析师的笔试成绩茎叶图</span></div><div class="line">stem(y) <span class="comment">#女性数据分析师的笔试成绩茎叶图</span></div><div class="line">EDA=<span class="keyword">function</span>(z) &#123;</div><div class="line">  par(mfrow=c(<span class="number">2</span>,<span class="number">2</span>))<span class="comment">#设置作图窗口为2行2列</span></div><div class="line">  hist(z);<span class="comment">#直方图</span></div><div class="line">  dotchart(z);<span class="comment">#点图</span></div><div class="line">  boxplot(z,horizontal=<span class="literal">F</span>);<span class="comment">#箱线图</span></div><div class="line">  qqnorm(z);qqline(z)<span class="comment">#正态概率图（Q-Q图）</span></div><div class="line">  par(mfrow=c(<span class="number">1</span>,<span class="number">1</span>))  <span class="comment">#恢复成单图</span></div><div class="line">&#125;</div><div class="line">EDA(x)</div><div class="line">EDA(y)</div></pre></td></tr></table></figure>
+<p><img src="http://sjhfx.cc/images/xzxjyalfx2.jpg" alt=""></p>
+<p><img src="http://sjhfx.cc/images/xzxjyalfx3.jpg" alt=""></p>
+<p>从茎叶图可以得出男性和女性的笔试成绩都不完全是正态分布的。而且，对比可以看到男性的成绩以85-95为主；女性的成绩比较分散，以60-90分为主。所以可初步估计男性的成绩比女性好，但并不能判断男性的成绩显著高于女性。</p>
+<p>从散点图和箱线图可以判断出，女性的成绩明显比男性分散，且女性的成绩平均值明显低于男性。从Q-Q图可以看到，男女的成绩数据都有比较严重的偏离正态性，所以应该首先考虑运用非参数的统计分析方法。<br><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">r=rank(y,ties.method=<span class="string">"random"</span>)<span class="comment"># y 求秩</span></div><div class="line">p=rank(x,ties.method=<span class="string">"random"</span>)<span class="comment"># x 求秩</span></div><div class="line">ks.test(p,<span class="string">"pnorm"</span>)<span class="comment">#检验样本数据是否符合正态分布</span></div><div class="line">ks.test(r,<span class="string">"pnorm"</span>)</div></pre></td></tr></table></figure></p>
+<p>上面两个检验的p-value都明显小于0.05，所以拒绝认为样本数据服从正态分布的特性，即样本的正态性较差，从而用基于符号秩和的检验是正确的。<br><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wilcox.test(x,y)<span class="comment">#对两样本作符号秩和检验</span></div></pre></td></tr></table></figure></p>
+<p>Wilcoxon rank sum test with continuity correction<br>data:  x and y<br>W = 41.5, p-value = 0.02801<br>alternative hypothesis: true location shift is not equal to 0</p>
+<p>从以上R软件运行的结果可以看到，p-value = 0.02801，在显著性水平为0.05的条件下，p-value &lt; 0.05，所以拒绝原假设，即认为男女成绩存在显著差异。</p>
+<p>分析结论：男性平均成绩为85.8分，女性平均成绩为69.4分，且女性成绩比较分散，经过对两个班的Wilcoxon符号秩检验可以得出，在显著性水平为0.05的条件下，拒绝认为男女成绩不存在显著差异，也就是说可以认为男女成绩有显著的不同，所以综上可以认为男性数据分析师的笔试成绩显著高于女性。（这是瞎编的结果，作者并没有性别歧视的意思！）</p>
+<p>参考资料：</p>
+<p><a href="http://yisiondong.blog.163.com/blog/static/119647198201061882313471" target="_blank" rel="external">关于两个班成绩差异显著性的研究</a></p>
+<p><a href="http://wiki.mbalib.com/wiki/%E7%A7%A9%E5%92%8C%E6%A3%80%E9%AA%8C" target="_blank" rel="external">秩和检验</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;文/&lt;a href=&quot;https//sjhfx.cc/&quot;&gt;数据化分析&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;显著性检验利用样本信息来判断假设是否合理，对测试数据进行比较分析时，不能仅凭两个结果（平均数或率）的不同就作出结论，而是要进行统计学分析，鉴别出两者差异的真实原因。&lt;/p&gt;
+&lt;p&gt;常
+    
+    </summary>
+    
+    
+      <category term="数据分析" scheme="http://sjhfx.cc/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+      <category term="显著性检验" scheme="http://sjhfx.cc/tags/%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E9%AA%8C/"/>
+    
+      <category term="案例" scheme="http://sjhfx.cc/tags/%E6%A1%88%E4%BE%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>解读数据挖掘之关联规则</title>
+    <link href="http://sjhfx.cc/2012/07/12/%E8%A7%A3%E8%AF%BB%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E4%B9%8B%E5%85%B3%E8%81%94%E8%A7%84%E5%88%99/"/>
+    <id>http://sjhfx.cc/2012/07/12/解读数据挖掘之关联规则/</id>
+    <published>2012-07-11T16:00:00.000Z</published>
+    <updated>2016-08-26T07:29:01.951Z</updated>
+    
+    <content type="html"><![CDATA[<p>文/<a href="https//sjhfx.cc/">数据化分析</a></p>
+<p> 人们通过发现关联的规则，可以从一件事情的发生，来推测另外一件事情的发生，从而更好地了解和掌握事物的发展规律等等，这就是寻找关联规则的基本意义。关联规则的实际应用包括：交叉销售、邮购目录的设计、商品摆放、流失客户分析、基于购买模式进行客户区隔等等……</p>
+<p>关联规则数据挖掘中最经典的案例就是沃尔玛的啤酒和尿布的故事。沃尔玛拥有世界上最大的数据仓库系统，为了能够准确了解顾客在其门店的购买习惯，沃尔玛对其顾客的购物行为进行购物篮分析，想知道顾客经常一起购买的商品有哪些。沃尔玛数据仓库里集中了其各门店的详细原始交易数据。在这些原始交易数据的基础上，沃尔玛利用数据挖掘方法对这些数据进行分析和挖掘。一个意外的发现是：“跟尿布一起购买最多的商品竟是啤酒！”经过大量实际调查和分析，揭示了一个隐藏在“尿布与啤酒”背后的美国人的一种行为模式：在美国，一些年轻的父亲下班后经常要到超市去买婴儿尿布，而他们中有30%～40%的人同时也为自己买一些啤酒。产生这一现象的原因是：美国的太太们常叮嘱她们的丈夫下班后为小孩买尿布，而丈夫们在买尿布后又随手带回了他们喜欢的啤酒。 </p>
+<p>在不同资料或程序中，关联规则的内容表述或许不同，但基本原理应是一致的，使用它会涉及到几个重要的参数，分别是：<strong>项集</strong>(Itemset)、<strong>支持</strong>(Support)、<strong>概率</strong>(Probability)、<strong>重要性</strong>(Importance)。</p>
+<p>下面用一个非常简单的示例分别加以说明，仅是为了方便快速理解相关概念，千万不要对号入座！假设有3笔交易对应的产品明细如下表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">交易号</th>
+<th style="text-align:center">产品</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">T01</td>
+<td style="text-align:center">啤酒</td>
+</tr>
+<tr>
+<td style="text-align:center">T01</td>
+<td style="text-align:center">尿布</td>
+</tr>
+<tr>
+<td style="text-align:center">T02</td>
+<td style="text-align:center">啤酒</td>
+</tr>
+<tr>
+<td style="text-align:center">T02</td>
+<td style="text-align:center">尿布</td>
+</tr>
+<tr>
+<td style="text-align:center">T03</td>
+<td style="text-align:center">尿布</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><p><strong>项集</strong>(Itemset)：</p>
+<p>项集包含一组产品，上面的示例包含3个项集，分别是：{啤酒}、{尿布}、{啤酒，尿布}。每个项集都有一个大小，该大小表示项集中包含的项的数目，例如项集{啤酒}的大小是1，项集{啤酒，尿布}的大小是2。</p>
+<p>频繁项集是在数据集中出现频率相当高的那些项集。 </p>
+</li>
+<li><p><strong>支持</strong>(Support)：</p>
+<p>支持表示一个项集出现的次数，例如项集{啤酒，尿布}的支持是同时包含啤酒和尿布的交易总个数。Support({啤酒})=2，Support({尿布})=3，Support({啤酒，尿布})=2。</p>
+<p>Minimum_Support是一个阈值参数，必须在处理关联模型之前指定该参数。该参数表示用户只对某些项集和规则感兴趣，这些规则表示数据集的最低支持度。它是用于对项集进行限制，而不是对规则进行限制。</p>
+</li>
+<li><p><strong>概率</strong>(Probability)：</p>
+<p>也叫置信度（Confidence），是关联规则的属性。</p>
+<p>Probability(尿布=&gt;啤酒)=Probability(啤酒|尿布)=Support({啤酒，尿布})/Support({尿布})=66.7%</p>
+<p>Probability(啤酒=&gt;尿布)=Probability(尿布|啤酒)=Support({啤酒，尿布})/Support({啤酒})=100%</p>
+<p>Minimum_Probability是一个阈值参数，必须在运行算法之前指定该参数。它表用户只对某些规则感兴趣，这些规则要大于或等于最小的概率。它对项集没有任何影响，它影响的是规则。</p>
+</li>
+<li><p><strong>重要性</strong>(Importance)：</p>
+<p>实际挖掘出来的一些关联规则，并非都是有用的，甚至是有一定的<strong>误导</strong>性，所以重要性这个指标就显得非常重要。关联规则重要性的定义，微软官方文档的翻译为：在已知规则左侧的情况下，求规则右侧的对数可能性值。这个怎么理解呢？个人认为它类似于概率论中相关性的概念，先计算概率的比率，然后使用对数将该比率规范化。下面是示例的计算结果（暂不知它的具体计算过程，希望知道的朋友能够告知）：</p>
+<p>Importance(尿布=&gt;啤酒)=Log10(6/5)=0.08</p>
+<p>Importance(啤酒=&gt;尿布)=Log10(9/8)=0.05</p>
+<p>如果重要性分数为0，则表示没有关联；正的重要性分数表示正相关；负的重要性分数表示负相关。</p>
+</li>
+</ol>
+<p>综上所述，这个简单示例的关联规则挖掘结果可以<strong>解读</strong>为：购买了尿布的消费者，有66.7%的人会同时购买啤酒，重要性是正数，约为0.08，表示当客户购买尿布时，购买啤酒的可能性会加大。反之，购买了啤酒的消费者，100%都会同时购买尿布，但重要性比 {尿布=&gt;啤酒} 这个关联规则要低一点。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;文/&lt;a href=&quot;https//sjhfx.cc/&quot;&gt;数据化分析&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; 人们通过发现关联的规则，可以从一件事情的发生，来推测另外一件事情的发生，从而更好地了解和掌握事物的发展规律等等，这就是寻找关联规则的基本意义。关联规则的实际应用包括：交叉销售、邮购
+    
+    </summary>
+    
+    
+      <category term="数据挖掘" scheme="http://sjhfx.cc/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/"/>
+    
+      <category term="关联规则" scheme="http://sjhfx.cc/tags/%E5%85%B3%E8%81%94%E8%A7%84%E5%88%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据分析的趋势</title>
+    <link href="http://sjhfx.cc/2012/03/01/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E8%B6%8B%E5%8A%BF/"/>
+    <id>http://sjhfx.cc/2012/03/01/数据分析的趋势/</id>
+    <published>2012-02-29T16:00:00.000Z</published>
+    <updated>2016-08-26T07:28:52.890Z</updated>
+    
+    <content type="html"><![CDATA[<p>文/<a href="https//sjhfx.cc/">数据化分析</a></p>
+<p>下图是在百度指数中查询数据分析得出的，从中可以清楚地看到，2011年数据分析的百度指数明显上升，说明大家对数据分析的关注度越来越高。</p>
+<p><img src="http://sjhfx.cc/images/sjfxdqs1.png" alt=""></p>
+<p>这种关注度上升的趋势，是否说明从事数据分析职业的前景很好呢？北京青年报有文章称：数据分析师或将成为职场新宠。 @和君王明夫 分享的一篇文章很有代表性：这样的职业理想相当靠谱：成为数据分析师。王明夫甚至预言：“数据分析师是新兴职业，前途大好。十几年前选了证券分析师职业的人，坚持到今的年薪都百万级了。TOP证券分析师在港沪年薪可达200万美元。现在选择数据分析师职业，或如十几年前选择证券分析师。”当然，数据分析师也是有层级的，高级的数据分析师需要学习业务、管理以及一些战略层面的知识，并结合分析技术和成功案例的理解，最终得出有实用价值的分析结论，作为企业的决策参考。</p>
+<p><img src="http://sjhfx.cc/images/sjfxdqs2.png" alt=""></p>
+<p>另外，百度指数的节假日效应非常明显，缩短时间间隔可以看得更清晰，从上图可以观察到，元旦、周末和春节等假期出现了相应的波谷，但本文主要是讨论数据分析的总体趋势，故对这种节假日效应的问题就不再详述了，将来有机会再另外发表文章进行讨论。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;文/&lt;a href=&quot;https//sjhfx.cc/&quot;&gt;数据化分析&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;下图是在百度指数中查询数据分析得出的，从中可以清楚地看到，2011年数据分析的百度指数明显上升，说明大家对数据分析的关注度越来越高。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://
+    
+    </summary>
+    
+    
+      <category term="数据分析" scheme="http://sjhfx.cc/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+      <category term="趋势" scheme="http://sjhfx.cc/tags/%E8%B6%8B%E5%8A%BF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据分析师的层级</title>
+    <link href="http://sjhfx.cc/2012/02/15/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%B8%88%E7%9A%84%E5%B1%82%E7%BA%A7/"/>
+    <id>http://sjhfx.cc/2012/02/15/数据分析师的层级/</id>
+    <published>2012-02-14T16:00:00.000Z</published>
+    <updated>2016-08-26T07:28:44.706Z</updated>
+    
+    <content type="html"><![CDATA[<p>文/<a href="https//sjhfx.cc/">数据化分析</a></p>
+<p>前段时间在微博上看到一张某集团的数据分析师职位层级表，由于表格太大，在网页上显得字体太小，很难看清楚，因此我将它简化处理成如下两张表格，分为层级1和层级2：</p>
+<p><img src="http://sjhfx.cc/images/sjfxsdcj.jpg" alt=""></p>
+<p>从表中可以看出，专家级的数据分析在分析方法的要求方面与资深数据分析师是相同的，层级2与层级1的能力差别主要体现在业务分析能力、管理能力和影响力等方面。要从“使命必达”的助理数据分析师，成长为“独挡一面”的数据分析专家，其中必然需要学习很多知识、积累很多经验、提升很多技能，这对从事数据分析的人有一定的指导意义，在做职业规划时可以参考。</p>
+<p>按照不同分析方法所能给人带来的智能程度，可以把分析能力划分为以下8个等级。</p>
+<h3 id="1-标准报表"><a href="#1-标准报表" class="headerlink" title="1. 标准报表"></a>1. 标准报表</h3><p>回答: 发生了什么？什么时候发生的？</p>
+<p>示例：月度或季度财务报表</p>
+<p>我们都见过报表，它们一般是定期生成，用来回答在某个特定的领域发生了什么。从某种程度上来说它们是有用的，但无法用于制定长期决策。</p>
+<h3 id="2-即席查询"><a href="#2-即席查询" class="headerlink" title="2. 即席查询"></a>2. 即席查询</h3><p>回答：有多少数量？发生了多少次？在哪里？</p>
+<p>示例：一周内各天各种门诊的病人数量报告。</p>
+<p>即席查询的最大好处是，让你不断提出问题并寻找答案。</p>
+<h3 id="3-多维分析"><a href="#3-多维分析" class="headerlink" title="3. 多维分析"></a>3. 多维分析</h3><p>回答：问题到底出在哪里？我该如何寻找答案？</p>
+<p>示例：对各种手机类型的用户进行排序，探查他们的呼叫行为。</p>
+<p>通过多维分析(OLAP)的钻取功能，可以让您有初步的发现。钻取功能如同层层剥笋，发现问题所在。</p>
+<h3 id="4-警报"><a href="#4-警报" class="headerlink" title="4. 警报"></a>4. 警报</h3><p>回答：我什么时候该有所反应？现在该做什么？</p>
+<p>示例：当销售额落后于目标时，销售总监将收到警报。</p>
+<p>警报可以让您知道什么时候出了问题，并当问题再次出现时及时告知您。警报可以通过电子邮件、RSS订阅、评分卡或仪表盘上的红色信号灯来展示。</p>
+<h3 id="5-统计分析"><a href="#5-统计分析" class="headerlink" title="5. 统计分析"></a>5. 统计分析</h3><p>回答：为什么会出现这种情况？我错失了什么机会？</p>
+<p>示例：银行可以弄清楚为什么重新申请房贷的客户在增多。</p>
+<p>这时您已经可以进行一些复杂的分析，比如频次分析模型或回归分析等等。统计分析是在历史数据中进行统计并总结规律。</p>
+<h3 id="6-预报"><a href="#6-预报" class="headerlink" title="6. 预报"></a>6. 预报</h3><p>回答：如果持续这种发展趋势，未来会怎么样？还需要多少？什么时候需要？</p>
+<p>示例：零售商可以预计特定商品未来一段时间在各个门店的需求量。</p>
+<p>预报可以说是最热门的分析应用之一，各行各业都用得到。特别对于供应商来说，能够准确预报需求，就可以让他们合理安排库存，既不会缺货，也不会积压。 </p>
+<h3 id="7-预测型建模"><a href="#7-预测型建模" class="headerlink" title="7. 预测型建模"></a>7. 预测型建模</h3><p>回答：接下来会发生什么？它对业务的影响程度如何？</p>
+<p>示例：酒店和娱乐行业可以预测哪些VIP客户会对特定度假产品有兴趣。</p>
+<p>如果您拥有上千万的客户，并希望展开一次市场营销活动，那么哪些人会是最可能响应的客户呢？如何划分出这些客户？哪些客户会流失？预测型建模能够给出解答。</p>
+<h3 id="8-优化"><a href="#8-优化" class="headerlink" title="8. 优化"></a>8. 优化</h3><p>回答：如何把事情做得更好？对于一个复杂问题来说，那种决策是最优的？</p>
+<p>示例：在给定了业务上的优先级、资源调配的约束条件以及可用技术的情况下，请您来给出IT平台优化的最佳方案，以满足每个用户的需求。</p>
+<p>优化带来创新，它同时考虑到资源与需求，帮助您找到实现目标的最佳方式。 </p>
+<h3 id="数据分析师的级别"><a href="#数据分析师的级别" class="headerlink" title="数据分析师的级别"></a><a href="http://www.open-open.com/news/view/aafb77" target="_blank" rel="external">数据分析师的级别</a></h3><h3 id="1、数据跟踪员：机械拷贝看到的数据，很少处理数据"><a href="#1、数据跟踪员：机械拷贝看到的数据，很少处理数据" class="headerlink" title="1、数据跟踪员：机械拷贝看到的数据，很少处理数据"></a>1、数据跟踪员：机械拷贝看到的数据，很少处理数据</h3><p>虽然这个工作的人还不能称作数据分析师，但是往往作这样工作的人还都自称是数据分析师，这样的人，只能通过×××系统看到有限的数据，并且很少去处理数据，甚至不理解数据的由来和含义，只是机械的把自己看到的数据拷贝出来，转发给相应的人。这类人发出来的数据，是否有意义，怎么解读，他自己是不知道的，只能期望收到数据的人了。</p>
+<h3 id="2、数据查询员-处理员：数据处理没问题，缺乏数据解读能力"><a href="#2、数据查询员-处理员：数据处理没问题，缺乏数据解读能力" class="headerlink" title="2、数据查询员/处理员：数据处理没问题，缺乏数据解读能力"></a>2、数据查询员/处理员：数据处理没问题，缺乏数据解读能力</h3><p>这些人可以称为分析师了，他们已经对数据有一定的理解了，对于大部分数据，他们也知道数据的定义，并且可以通过监控系统或者原始的数据，处理得到这些数据。统计学的方法，这批人还是很精通的，统计学的工具，他们也是用起来得心应手，你让他们做一下因子分析，聚类肯定是没问题，各类检验也是用的炉火纯青。他们的不足是：1、如果不告诉他们命题，那么他们就不知道该应用什么样的方法去得到结论了。2、对于数据的处理没问题，但是却没有一个很好的数据解读能力。只能在统计学的角度上解释数据。</p>
+<h3 id="3、数据分析师：解读数据，定位问题提出答案"><a href="#3、数据分析师：解读数据，定位问题提出答案" class="headerlink" title="3、数据分析师：解读数据，定位问题提出答案"></a>3、数据分析师：解读数据，定位问题提出答案</h3><p>数据分析师这群人，对于数据的处理已经不是问题了，他们的重点已经转化到怎么样去解读数据了，同样的数据，在不同人的眼中有不一致的内容。好的数据分析师，是能通过数据找到问题，准确的定位问题，准确的找到问题产生的原因，为下一步的改进，找到机会点的人。往往科班出身的人，欠缺的不是在处理数据上，而是在解读数据上，至于将数据和产品结合到一起，则是其更缺少的能力了。</p>
+<h3 id="4、数据应用师：将数据还原到产品中，为产品所用"><a href="#4、数据应用师：将数据还原到产品中，为产品所用" class="headerlink" title="4、数据应用师：将数据还原到产品中，为产品所用"></a>4、数据应用师：将数据还原到产品中，为产品所用</h3><p>数据应用，这个词很少被提到。但是应用数据被提的很多，分析了大量的数据，除了能找到问题以外，还有很多数据可以还原到产品中，为产品所用。典型的是在电子商务的网站中，用户的购买数据，查看数据和操作的记录，往往是为其推荐新商品的好起点，而数据应用师就是要通过自己的分析，给相应的产品人员一个应该推荐什么产品，购买的可能性会最大的一个结论。国内能做到这个级别的数据人员还真是少的可怜，甚至大部分人员连数据的视图都搞不定，而真正意义上的能数据应用师，可以用数据让一个产品变得更加地简单高效。</p>
+<h3 id="5、数据规划师：走在产品前面，让数据有新的价值方向"><a href="#5、数据规划师：走在产品前面，让数据有新的价值方向" class="headerlink" title="5、数据规划师：走在产品前面，让数据有新的价值方向"></a>5、数据规划师：走在产品前面，让数据有新的价值方向</h3><p>数据规划师，不能说水平上比数据应用师高多少，而是另外一个让数据有价值的方向。往往在实际的应用中，数据都是有其生命周期的，用来分析、应用的数据也是，这点上，尤其是在互联网公司更加明显，一个版本的更新，可能导致之前的所有数据都一定程度的失效。数据规划师在一个产品设计之前，就已经分析到了，这个产品应该记录什么样的数据，这些数据能跟踪什么问题，哪些记录到的数据，应该可以用到数据中去，可以对产品产生什么样的价值。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;文/&lt;a href=&quot;https//sjhfx.cc/&quot;&gt;数据化分析&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;前段时间在微博上看到一张某集团的数据分析师职位层级表，由于表格太大，在网页上显得字体太小，很难看清楚，因此我将它简化处理成如下两张表格，分为层级1和层级2：&lt;/p&gt;
+&lt;p&gt;&lt;img 
+    
+    </summary>
+    
+    
+      <category term="数据分析师" scheme="http://sjhfx.cc/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%B8%88/"/>
+    
+      <category term="层级" scheme="http://sjhfx.cc/tags/%E5%B1%82%E7%BA%A7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据化分析的定义</title>
+    <link href="http://sjhfx.cc/2012/02/12/%E6%95%B0%E6%8D%AE%E5%8C%96%E5%88%86%E6%9E%90%E7%9A%84%E5%AE%9A%E4%B9%89/"/>
+    <id>http://sjhfx.cc/2012/02/12/数据化分析的定义/</id>
+    <published>2012-02-11T16:00:00.000Z</published>
+    <updated>2016-08-26T07:28:36.546Z</updated>
+    
+    <content type="html"><![CDATA[<p>文/<a href="https//sjhfx.cc/">数据化分析</a></p>
+<p>数据化分析，是指对客观真实的数据运用恰当的方法和工具进行科学有效地分析，简单来说就是：数据（客观、真实）化（方法、工具）分析（科学、有效）。无论做什么工作，都有可能需要用到数据化分析。合理地运用数据化分析，能帮助你作出正确的判断和明智的决策。数据化分析的前提是客观、真实，不能随心所欲，更不能伪造、扭曲数据。数据的客观、真实性要靠人的道德和商业的原则来保证。数据化分析不是把数据收集整理好就完成任务了，数据化分析需要运用恰当的方法和工具，对整理好的数据进行科学有效地分析，从而提供有理、有据、有可操作性的咨询和指导意见。</p>
+<h3 id="数据化分析的步骤"><a href="#数据化分析的步骤" class="headerlink" title="数据化分析的步骤"></a>数据化分析的步骤</h3><p>（1）收集整理客观真实的数据；<br>（2）运用恰当的方法和工具；<br>（3）对整理好的数据进行科学有效地分析。</p>
+<h3 id="数据化分析的优点"><a href="#数据化分析的优点" class="headerlink" title="数据化分析的优点"></a>数据化分析的优点</h3><p>（1）数字最简单：是人类最容易学习、接受、掌握的知识。<br>（2）数字最客观：能客观、公正地反映出事物的本质和规律。<br>（3）数字会说话: 能消除语言障碍，中国文字较难理解虽然这是文化优势，但对沟通执行不利。<br>（4）数字速度快: 计算机技术的发展大大加快了数据的计算、统计、分析、处理的速度。<br>（5）数字国际化：在国际商业运作中大量使用，是国际化的语言。<br>（6）数字来决策: 能正确评判企业技术、质量、财务、营销、服务、人力等绩效。<br>（7）数字最有力: 从平民百姓到专业权威，再挑剔的消费者在有力的数据面前也能理解接受。</p>
+<p>以上定义是受“数据化管理”和“数字化管理”概念的启示，但“数据化分析”更强调“分析”。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;文/&lt;a href=&quot;https//sjhfx.cc/&quot;&gt;数据化分析&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;数据化分析，是指对客观真实的数据运用恰当的方法和工具进行科学有效地分析，简单来说就是：数据（客观、真实）化（方法、工具）分析（科学、有效）。无论做什么工作，都有可能需要用到数据化分析
+    
+    </summary>
+    
+    
+      <category term="数据化分析" scheme="http://sjhfx.cc/tags/%E6%95%B0%E6%8D%AE%E5%8C%96%E5%88%86%E6%9E%90/"/>
+    
+      <category term="定义" scheme="http://sjhfx.cc/tags/%E5%AE%9A%E4%B9%89/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据化分析的开篇</title>
+    <link href="http://sjhfx.cc/2012/02/09/%E6%95%B0%E6%8D%AE%E5%8C%96%E5%88%86%E6%9E%90%E7%9A%84%E5%BC%80%E7%AF%87/"/>
+    <id>http://sjhfx.cc/2012/02/09/数据化分析的开篇/</id>
+    <published>2012-02-08T16:00:00.000Z</published>
+    <updated>2016-08-26T07:28:26.837Z</updated>
+    
+    <content type="html"><![CDATA[<p>文/<a href="https//sjhfx.cc/">数据化分析</a></p>
+<p>几年以前就接触过博客，也尝试在不同网站使用过，甚至还申请了专门的域名和空间，基于WordPress博客系统使用过一段时间，但是都是以转发为主，很少发表原创的东西。</p>
+<p>如今想认真地梳理一下自己的知识结构，不断地学习提升自己的专业技能，希望借此积累经验并记录分享出来，不至于只是分散地存储在自己脑海的某个角落里。 </p>
+<p><img src="http://sjhfx.cc/images/sjhfx.jpg" alt=""></p>
+<p>由于跟马有缘，故采用上图作为本博客的头像，它是一个繁体的“馬”字，被形像地描绘成马的样子，寓意一马当先、龙马精神、马不停蹄、马到成功。</p>
+<h3 id="友情提示"><a href="#友情提示" class="headerlink" title="友情提示"></a>友情提示</h3><p>原创文章的版权归我所有！对转载内容可能做了些修改和增加图片注释，如果侵犯了您的版权，或没有注明原作者，请通知我。</p>
+<p>本博客采用“创作共用”的授权协议，这种许可授权机制能让任何创造性作品都有机会被更多人分享和再创造，共同促进人类知识作品在其生命周期内产生最大价值。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;文/&lt;a href=&quot;https//sjhfx.cc/&quot;&gt;数据化分析&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;几年以前就接触过博客，也尝试在不同网站使用过，甚至还申请了专门的域名和空间，基于WordPress博客系统使用过一段时间，但是都是以转发为主，很少发表原创的东西。&lt;/p&gt;
+&lt;p&gt;如今
+    
+    </summary>
+    
+    
+      <category term="数据化分析" scheme="http://sjhfx.cc/tags/%E6%95%B0%E6%8D%AE%E5%8C%96%E5%88%86%E6%9E%90/"/>
+    
+      <category term="开篇" scheme="http://sjhfx.cc/tags/%E5%BC%80%E7%AF%87/"/>
+    
+  </entry>
+  
+</feed>
